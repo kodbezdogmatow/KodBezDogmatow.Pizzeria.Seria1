@@ -1,18 +1,23 @@
 ﻿using Schikeria.Model.Pizzas;
 using Schikeria.Providers;
+using Schikeria.Services.Pizzas;
 
+var displayService = new DisplayService();
 var pizzas = new PizzaProvider().Get();
 
 foreach (var pizza in pizzas)
 {
-    Console.WriteLine($"{pizza.Name}: {pizza.Price} ZL, {pizza.Size}");
+    displayService.Display(pizza);
 }
 
-var yourPizza = pizzas
-    .First(p => 
-        p.Name == Names.SalamiPepperoni &&
-        p.Size == Sizes.Large);
+var yourPiizaSalami = pizzas
+    .First(p => p.Name == Names.Salami);
+var yourPiizaPepperoni = pizzas
+    .First(p => p.Name == Names.Pepperoni);
 
-Console.WriteLine($"Twoja Pizza: {yourPizza.Name}: {yourPizza.Price} ZL, {yourPizza.Size}");
+Console.WriteLine($"Twoja Pizza:");
+
+displayService.Display(yourPiizaSalami, Sizes.Medium);
+displayService.Display(yourPiizaPepperoni, Sizes.Large);
 
 Console.ReadLine();

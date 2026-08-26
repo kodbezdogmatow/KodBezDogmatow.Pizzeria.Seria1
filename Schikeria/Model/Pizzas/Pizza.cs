@@ -2,8 +2,7 @@
 {
     public class Pizza
     {
+        public Dictionary<Sizes, decimal> Sizes { get; set; } = [];
         public required string Name { get; set; }
-        public decimal Price { get; set; }
-        public Sizes Size { get; set; }
     }
 }

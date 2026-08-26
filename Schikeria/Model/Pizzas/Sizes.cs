@@ -5,6 +5,8 @@
         None,
         Small, 
         Medium, 
-        Large
+        Large,
+        XL,
+        XXL
     }
 }
