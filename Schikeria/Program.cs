@@ -1,13 +1,12 @@
-﻿using Schikeria;
-using Schikeria.Providers;
+﻿using Schikeria.Providers;
 
-new PizzaProvider()
-    .Get()
-    .ForEach(DisplayService.Display);
+// Rozmiary: Small, Medium, Large.
 
-//foreach(var pizza in pizzas)
-//{
-//    Console.WriteLine($"{pizza.Name}: {pizza.Price} ZL");
-//}
+var pizzas = new PizzaProvider().Get();
+
+foreach (var pizza in pizzas)
+{
+    Console.WriteLine($"{pizza.Name}: {pizza.Price} ZL, {pizza.Size}");
+}
 
 Console.ReadLine();

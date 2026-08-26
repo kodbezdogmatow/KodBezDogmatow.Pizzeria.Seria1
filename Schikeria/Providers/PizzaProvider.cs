@@ -1,4 +1,4 @@
-﻿using Schikeria.Model;
+﻿using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Providers
 {
