@@ -1,8 +1,8 @@
 ﻿using Schikeria.Model.Pizzas;
 
-namespace Schikeria.Providers
+namespace Schikeria.Providers.Pizzas
 {
-    public class PizzaProvider
+    public class Provider
     {       
         public List<Pizza> Get()
         {
