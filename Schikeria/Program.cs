@@ -29,16 +29,29 @@ using Schikeria.Services.Pizzas;
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
 
-foreach (var pizza in pizzas)
-{
-    displayService.Display(pizza);
-}
+//foreach (var pizza in pizzas)
+//{
+//    displayService.Display(pizza);
+//}
 
 // Test szefa
 var yourPiizaSalami = pizzas
     .First(p => p.Name == Names.Salami);
 var yourPiizaPepperoni = pizzas
     .First(p => p.Name == Names.Pepperoni);
+
+// NOTE: Provider-Test
+//var toppings = new Schikeria.Providers.Toppings.Provider()
+//    .Get();
+
+//var onion = toppings.First(t => t.Name == "Onions");
+//yourPiizaSalami.Toppings.Add(onion);
+
+//var toppings1 = new Schikeria.Providers.Toppings.Provider()
+//    .Get();
+//var onion1 = toppings1.First(t => t.Name == "Onions");
+//onion1.Price = 2.5m;
+//yourPiizaPepperoni.Toppings.Add(onion1);
 
 Console.WriteLine($"Twoja Pizza:");
 

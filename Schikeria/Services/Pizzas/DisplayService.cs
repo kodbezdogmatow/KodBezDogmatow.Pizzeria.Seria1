@@ -18,6 +18,9 @@ namespace Schikeria.Services.Pizzas
         {
             var price = pizza.Sizes[size];
             Console.WriteLine($"{pizza.Name}: {size}, {price} ZL");
+
+            pizza.Toppings
+                .ForEach(t => Console.WriteLine($"\t{t.Name}: {t.Price} ZL"));
         }
     }
 }
