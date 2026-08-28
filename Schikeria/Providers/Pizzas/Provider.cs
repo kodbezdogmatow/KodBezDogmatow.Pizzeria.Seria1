@@ -1,9 +1,11 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Constants.Pizzas;
+using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Providers.Pizzas
 {
+    // TECHDEBT: Uciazliwe zarzadzanie pizzami. Jak to rozwiazac?
     public class Provider
-    {       
+    {
         public List<Pizza> Get()
         {
             var margherita = new Pizza
@@ -83,6 +85,17 @@ namespace Schikeria.Providers.Pizzas
             rukola.Sizes.Add(Sizes.XL, 26.3m);
             rukola.Sizes.Add(Sizes.XXL, 29.99m);
 
+            var weganska = new Pizza
+            {
+                Name = Names.Weganska,
+            };
+
+            weganska.Sizes.Add(Sizes.Small, 18);
+            weganska.Sizes.Add(Sizes.Medium, 21.5m);
+            weganska.Sizes.Add(Sizes.Large, 23.6m);
+            weganska.Sizes.Add(Sizes.XL, 27.8m);
+            weganska.Sizes.Add(Sizes.XXL, 30m);
+
             return [
                 margherita,
                 salami,
@@ -90,7 +103,8 @@ namespace Schikeria.Providers.Pizzas
                 hawajska,
                 diavola,
                 capricciosa,
-                rukola
+                rukola,
+                weganska
             ];
         }
     }

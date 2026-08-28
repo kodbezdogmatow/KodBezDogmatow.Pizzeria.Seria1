@@ -1,4 +1,5 @@
-﻿using Schikeria.Model.Toppings;
+﻿using Schikeria.Constants.Toppings;
+using Schikeria.Model.Toppings;
 
 namespace Schikeria.Managers.Toppings
 {
@@ -11,52 +12,52 @@ namespace Schikeria.Managers.Toppings
             _toppings = [
                     new Topping
                     {
-                        Name = "Ham",
+                        Name = Names.Ham,
                         Price = 2m,
                     },
                     new Topping
                     {
-                        Name = "Salami",
+                        Name = Names.Salami,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = "Mushrooms",
+                        Name = Names.Mushrooms,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = "Onions",
+                        Name = Names.Onions,
                         Price = 1m,
                     },
                     new Topping
                     {
-                        Name = "Olives",
+                        Name = Names.Olives,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = "Pepperoni",
+                        Name = Names.Pepperoni,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = "Chicken",
+                        Name = Names.Chicken,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = "Mozzarella",
+                        Name = Names.Mozzarella,
                         Price = 2m,
                     },
                     new Topping
                     {
-                        Name = "BellPepper",
+                        Name = Names.BellPepper,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = "Pineapple",
+                        Name = Names.Pineapple,
                         Price = 1.5m,
                     }
                 ];
@@ -65,6 +66,18 @@ namespace Schikeria.Managers.Toppings
         public Topping Get(string name)
         {
             return _toppings.First(x => x.Name == name);
+        }
+
+        // TODO: Zmien nazwe na bardziej opisowa i prawidlowa gramatycznie
+        public List<Topping> GetAllNotMeat()
+        {
+            return _toppings
+                .Where(t =>
+                    t.Name != Names.Pepperoni &&
+                    t.Name != Names.Chicken &&
+                    t.Name != Names.Ham &&
+                    t.Name != Names.Salami)
+                .ToList();
         }
     }
 }

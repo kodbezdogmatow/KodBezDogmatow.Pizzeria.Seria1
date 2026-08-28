@@ -11,25 +11,28 @@ var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
 //}
 
 // Test szefa
-var yourPiizaSalami = pizzas
-    .First(p => p.Name == Names.Salami);
+var yourPiizaWeganska = pizzas
+    .First(p => p.Name == Schikeria.Constants.Pizzas.Names.Weganska);
 var yourPiizaPepperoni = pizzas
-    .First(p => p.Name == Names.Pepperoni);
+    .First(p => p.Name == Schikeria.Constants.Pizzas.Names.Pepperoni);
 
 var manager = new Manager();
 
-var ham = manager.Get("Ham");
-yourPiizaSalami.Toppings.Add(ham);
+yourPiizaWeganska.Toppings.AddRange(
+    manager.GetAllNotMeat());
 
-var ham1 = manager.Get("Ham");
-yourPiizaPepperoni.Toppings.Add(ham1);
+//var ham = manager.Get(Schikeria.Constants.Toppings.Names.Ham);
+//yourPiizaSalami.Toppings.Add(ham);
 
-ham.Price *= 0.9m;
+//var ham1 = manager.Get(Schikeria.Constants.Toppings.Names.Ham);
+//yourPiizaPepperoni.Toppings.Add(ham1);
+
+//ham.Price *= 0.9m;
 
 
 Console.WriteLine($"Twoja Pizza:");
 
-displayService.Display(yourPiizaSalami, Sizes.Medium);
+displayService.Display(yourPiizaWeganska, Sizes.Medium);
 displayService.Display(yourPiizaPepperoni, Sizes.Large);
 
 Console.ReadLine();

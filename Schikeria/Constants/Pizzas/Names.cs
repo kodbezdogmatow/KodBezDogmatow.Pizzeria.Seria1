@@ -1,4 +1,4 @@
-﻿namespace Schikeria.Model.Pizzas
+﻿namespace Schikeria.Constants.Pizzas
 {
     public static class Names
     {
@@ -9,5 +9,6 @@
         public const string Diavola = "Diavola";
         public const string Capricciosa = "Capricciosa";
         public const string Rukola = "Rukola";
+        public const string Weganska = "Weganska";
     }
 }
