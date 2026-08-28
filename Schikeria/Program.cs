@@ -1,4 +1,5 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Managers.Toppings;
+using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
 //Pizza może mieć dodatki.
@@ -18,10 +19,12 @@ using Schikeria.Services.Pizzas;
 // - dostarcza dodatki zdefiniowane w naszym systemie
 // - umozliwa edycje listy dodatkow
 // - elastyczny jesli chodzi o instancje konkretnych dodatkow
+// - umozliwa prace z tym samym objektem, ale rowniez osobne instancje dla tego samego dodatku sa mozliwe
 
 // 2. Manager
 // - hermentyzacja listy dodatkow
-// - nieumozliwa edycje listy dodatkow
+// - nieumozliwa edycje listy dodatkow bezposrednio
+// - umozliwa prace z tym samym objektem, ale rowniez osobne instancje dla tego samego dodatku sa mozliwe
 
 // 3. Factory
 // - tworzy za kazdym razem nowy dodatek
@@ -52,6 +55,19 @@ var yourPiizaPepperoni = pizzas
 //var onion1 = toppings1.First(t => t.Name == "Onions");
 //onion1.Price = 2.5m;
 //yourPiizaPepperoni.Toppings.Add(onion1);
+
+// NOTE: Manager-Test
+//var manager = new Manager();
+
+// TODO: Zapytac czy ten sam dodatek, moze zostac dodany do tej samej pizzy wielokrotnie
+
+var onion = new Manager().Get("Onions");
+yourPiizaSalami.Toppings.Add(onion);
+
+var onion1 = new Manager().Get("Onions");
+onion1.Price = 2.5m;
+
+yourPiizaPepperoni.Toppings.Add(onion1);
 
 Console.WriteLine($"Twoja Pizza:");
 
