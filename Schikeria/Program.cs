@@ -1,5 +1,4 @@
-﻿using Schikeria.Managers.Toppings;
-using Schikeria.Model.Pizzas;
+﻿using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
 //Pizza może mieć dodatki.
@@ -61,13 +60,23 @@ var yourPiizaPepperoni = pizzas
 
 // TODO: Zapytac czy ten sam dodatek, moze zostac dodany do tej samej pizzy wielokrotnie
 
-var onion = new Manager().Get("Onions");
-yourPiizaSalami.Toppings.Add(onion);
+//var onion = new Manager().Get("Onions");
+//yourPiizaSalami.Toppings.Add(onion);
 
-var onion1 = new Manager().Get("Onions");
-onion1.Price = 2.5m;
+//var onion1 = new Manager().Get("Onions");
+//onion1.Price = 2.5m;
 
-yourPiizaPepperoni.Toppings.Add(onion1);
+//yourPiizaPepperoni.Toppings.Add(onion1);
+
+// NOTE: Factory-Test
+//var factory = new Factory();
+
+//var onion = factory.Create("Onions");
+//yourPiizaSalami.Toppings.Add(onion);
+
+//var onion1 = factory.Create("Onions");
+//onion1.Price = 2.5m;
+//yourPiizaPepperoni.Toppings.Add(onion1);
 
 Console.WriteLine($"Twoja Pizza:");
 
