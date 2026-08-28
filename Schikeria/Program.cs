@@ -1,32 +1,6 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Managers.Toppings;
+using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
-
-//Pizza może mieć dodatki.
-//Dodatek wpływa na cenę pizzy.
-//Ham 2.00
-//Salami	2.50
-//Mushrooms	1.50
-//Onions	1.00
-//Olives	1.50
-//Pepperoni	2.50
-//Chicken	2.50
-//Mozzarella	2.00
-//BellPepper	1.50
-//Pineapple	1.50
-
-// 1. Provider
-// - dostarcza dodatki zdefiniowane w naszym systemie
-// - umozliwa edycje listy dodatkow
-// - elastyczny jesli chodzi o instancje konkretnych dodatkow
-// - umozliwa prace z tym samym objektem, ale rowniez osobne instancje dla tego samego dodatku sa mozliwe
-
-// 2. Manager
-// - hermentyzacja listy dodatkow
-// - nieumozliwa edycje listy dodatkow bezposrednio
-// - umozliwa prace z tym samym objektem, ale rowniez osobne instancje dla tego samego dodatku sa mozliwe
-
-// 3. Factory
-// - tworzy za kazdym razem nowy dodatek
 
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
@@ -42,41 +16,16 @@ var yourPiizaSalami = pizzas
 var yourPiizaPepperoni = pizzas
     .First(p => p.Name == Names.Pepperoni);
 
-// NOTE: Provider-Test
-//var toppings = new Schikeria.Providers.Toppings.Provider()
-//    .Get();
+var manager = new Manager();
 
-//var onion = toppings.First(t => t.Name == "Onions");
-//yourPiizaSalami.Toppings.Add(onion);
+var ham = manager.Get("Ham");
+yourPiizaSalami.Toppings.Add(ham);
 
-//var toppings1 = new Schikeria.Providers.Toppings.Provider()
-//    .Get();
-//var onion1 = toppings1.First(t => t.Name == "Onions");
-//onion1.Price = 2.5m;
-//yourPiizaPepperoni.Toppings.Add(onion1);
+var ham1 = manager.Get("Ham");
+yourPiizaPepperoni.Toppings.Add(ham1);
 
-// NOTE: Manager-Test
-//var manager = new Manager();
+ham.Price *= 0.9m;
 
-// TODO: Zapytac czy ten sam dodatek, moze zostac dodany do tej samej pizzy wielokrotnie
-
-//var onion = new Manager().Get("Onions");
-//yourPiizaSalami.Toppings.Add(onion);
-
-//var onion1 = new Manager().Get("Onions");
-//onion1.Price = 2.5m;
-
-//yourPiizaPepperoni.Toppings.Add(onion1);
-
-// NOTE: Factory-Test
-//var factory = new Factory();
-
-//var onion = factory.Create("Onions");
-//yourPiizaSalami.Toppings.Add(onion);
-
-//var onion1 = factory.Create("Onions");
-//onion1.Price = 2.5m;
-//yourPiizaPepperoni.Toppings.Add(onion1);
 
 Console.WriteLine($"Twoja Pizza:");
 

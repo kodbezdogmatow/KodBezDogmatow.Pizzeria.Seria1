@@ -7,4 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Factories\**" />
+    <Compile Remove="Providers\Toppings\**" />
+    <EmbeddedResource Remove="Factories\**" />
+    <EmbeddedResource Remove="Providers\Toppings\**" />
+    <None Remove="Factories\**" />
+    <None Remove="Providers\Toppings\**" />
+  </ItemGroup>
+
 </Project>
