@@ -1,38 +1,52 @@
-﻿using Schikeria.Managers.Toppings;
-using Schikeria.Model.Pizzas;
+﻿using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
+// Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
+Pizza? selectedPizza = null;
+Sizes selectedSize = Sizes.None;
 
-//foreach (var pizza in pizzas)
-//{
-//    displayService.Display(pizza);
-//}
+foreach (var pizza in pizzas)
+{
+    var pizzaMenuNumber = pizzas.IndexOf(pizza) + 1;
+    Console.WriteLine($"[{pizzaMenuNumber}]: {pizza.Name}");
+}
 
-// Test szefa
-var yourPiizaWeganska = pizzas
-    .First(p => p.Name == Schikeria.Constants.Pizzas.Names.Weganska);
-var yourPiizaPepperoni = pizzas
-    .First(p => p.Name == Schikeria.Constants.Pizzas.Names.Pepperoni);
+if (int.TryParse(Console.ReadLine(), out int selectedPizzaMenuNumber))
+{
+    var selectedPizzaIndex = selectedPizzaMenuNumber - 1;
+    selectedPizza = pizzas[selectedPizzaIndex];
+}
 
-var manager = new Manager();
+if (selectedPizza == null)
+{
+    Console.WriteLine("Niewlasciwy wybor");
+    return;
+}
 
-yourPiizaWeganska.Toppings.AddRange(
-    manager.GetAllNotMeat());
+var availableSizes = Enum
+    .GetValues<Sizes>()
+    .Except([Sizes.None])
+    .ToList();
 
-//var ham = manager.Get(Schikeria.Constants.Toppings.Names.Ham);
-//yourPiizaSalami.Toppings.Add(ham);
+foreach (var size in availableSizes)
+{
+    Console.WriteLine($"[{(int)size}]: {size}");
+}
 
-//var ham1 = manager.Get(Schikeria.Constants.Toppings.Names.Ham);
-//yourPiizaPepperoni.Toppings.Add(ham1);
+if (int.TryParse(Console.ReadLine(), out int selectedSizeMenuNumber))
+{
+    var selectedSizeIndex = selectedSizeMenuNumber - 1;
+    selectedSize = (Sizes)selectedSizeMenuNumber;
+}
 
-//ham.Price *= 0.9m;
+if (selectedSize == Sizes.None)
+{
+    Console.WriteLine("Niewlasciwy wybor");
+    return;
+}
 
-
-Console.WriteLine($"Twoja Pizza:");
-
-displayService.Display(yourPiizaWeganska, Sizes.Medium);
-displayService.Display(yourPiizaPepperoni, Sizes.Large);
+Console.WriteLine($"{selectedPizza.Name}, {selectedSize}");
 
 Console.ReadLine();

@@ -96,7 +96,7 @@ namespace Schikeria.Providers.Pizzas
             weganska.Sizes.Add(Sizes.XL, 27.8m);
             weganska.Sizes.Add(Sizes.XXL, 30m);
 
-            return [
+            List<Pizza> pizzas = [
                 margherita,
                 salami,
                 pepperoni,
@@ -106,6 +106,10 @@ namespace Schikeria.Providers.Pizzas
                 rukola,
                 weganska
             ];
+
+            return pizzas
+                .OrderBy(p => p.Name)
+                .ToList();
         }
     }
 }
