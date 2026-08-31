@@ -1,4 +1,4 @@
-﻿using Schikeria.Constants.Toppings;
+﻿using Schikeria.Model.Pizzas;
 using Schikeria.Model.Toppings;
 
 namespace Schikeria.Managers.Toppings
@@ -12,52 +12,52 @@ namespace Schikeria.Managers.Toppings
             _toppings = [
                     new Topping
                     {
-                        Name = Names.Ham,
+                        Name = Constants.Toppings.Names.Ham,
                         Price = 2m,
                     },
                     new Topping
                     {
-                        Name = Names.Salami,
+                        Name = Constants.Toppings.Names.Salami,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Mushrooms,
+                        Name = Constants.Toppings.Names.Mushrooms,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Onions,
+                        Name = Constants.Toppings.Names.Onions,
                         Price = 1m,
                     },
                     new Topping
                     {
-                        Name = Names.Olives,
+                        Name = Constants.Toppings.Names.Olives,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Pepperoni,
+                        Name = Constants.Toppings.Names.Pepperoni,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Chicken,
+                        Name = Constants.Toppings.Names.Chicken,
                         Price = 2.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Mozzarella,
+                        Name = Constants.Toppings.Names.Mozzarella,
                         Price = 2m,
                     },
                     new Topping
                     {
-                        Name = Names.BellPepper,
+                        Name = Constants.Toppings.Names.BellPepper,
                         Price = 1.5m,
                     },
                     new Topping
                     {
-                        Name = Names.Pineapple,
+                        Name = Constants.Toppings.Names.Pineapple,
                         Price = 1.5m,
                     }
                 ];
@@ -68,31 +68,32 @@ namespace Schikeria.Managers.Toppings
             return _toppings.First(x => x.Name == name);
         }
 
-        public List<MenuToppingInfo> GetForMenu()
+        public List<MenuToppingInfo> GetForMenu(Pizza pizza)
         {
-            return _toppings
+            var allToppings = _toppings;
+
+            if (pizza.Name == Constants.Pizzas.Names.Weganska)
+            {
+                allToppings = GetAllNonMeat();
+            }
+
+            return allToppings
                 .Select(t => new MenuToppingInfo
                 {
                     Name = t.Name,
-                    MenuNumber = GetMenuItemPosition(t),
+                    MenuNumber = allToppings.IndexOf(t) + 1,
                 })
                 .ToList();
         }
 
-        private int GetMenuItemPosition(Topping t)
-        {
-            return _toppings.IndexOf(t) + 1;
-        }
-
-        // TODO: Zmien nazwe na bardziej opisowa i prawidlowa gramatycznie
-        public List<Topping> GetAllNotMeat()
+        private List<Topping> GetAllNonMeat()
         {
             return _toppings
                 .Where(t =>
-                    t.Name != Names.Pepperoni &&
-                    t.Name != Names.Chicken &&
-                    t.Name != Names.Ham &&
-                    t.Name != Names.Salami)
+                    t.Name != Constants.Toppings.Names.Pepperoni &&
+                    t.Name != Constants.Toppings.Names.Chicken &&
+                    t.Name != Constants.Toppings.Names.Ham &&
+                    t.Name != Constants.Toppings.Names.Salami)
                 .ToList();
         }
     }

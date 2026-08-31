@@ -2,7 +2,6 @@
 using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
-
 // Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
@@ -15,7 +14,9 @@ foreach (var pizza in pizzas)
     Console.WriteLine($"[{pizzaMenuNumber}]: {pizza.Name}");
 }
 
-if (int.TryParse(Console.ReadLine(), out int selectedPizzaMenuNumber))
+var maxPizzaMenuNumber = pizzas.Count;
+if (int.TryParse(Console.ReadLine(), out int selectedPizzaMenuNumber) &&
+    selectedPizzaMenuNumber <= maxPizzaMenuNumber)
 {
     var selectedPizzaIndex = selectedPizzaMenuNumber - 1;
     selectedPizza = pizzas[selectedPizzaIndex];
@@ -23,7 +24,7 @@ if (int.TryParse(Console.ReadLine(), out int selectedPizzaMenuNumber))
 
 if (selectedPizza == null)
 {
-    Console.WriteLine("Niewlasciwy wybor");
+    Console.WriteLine("Niewlasciwy wybor pizzy");
     return;
 }
 
@@ -37,42 +38,61 @@ foreach (var size in availableSizes)
     Console.WriteLine($"[{(int)size}]: {size}");
 }
 
-if (int.TryParse(Console.ReadLine(), out int selectedSizeMenuNumber))
+if (int.TryParse(Console.ReadLine(), out int selectedSizeMenuNumber) &&
+    Enum.IsDefined(typeof(Sizes), selectedSizeMenuNumber))
 {
-    var selectedSizeIndex = selectedSizeMenuNumber - 1;
     selectedSize = (Sizes)selectedSizeMenuNumber;
 }
 
 if (selectedSize == Sizes.None)
 {
-    Console.WriteLine("Niewlasciwy wybor");
+    Console.WriteLine("Niewlasciwy wybor rozmiaru");
     return;
 }
 
 var toppingManager = new Manager();
-var toppingInfos = toppingManager.GetForMenu();
+var toppingInfos = toppingManager.GetForMenu(selectedPizza);
 
 foreach (var info in toppingInfos)
 {
     Console.WriteLine($"[{info.MenuNumber}]: {info.Name}");
 }
 
+Console.WriteLine("[Q]: Wyjscie");
 
 var toppingInput = Console.ReadLine();
 
-var toppingMenuNumbers = toppingInput!
-    .Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-foreach (var menuNumber in toppingMenuNumbers)
+if (!toppingInput.Contains("Q"))
 {
-    if (int.TryParse(menuNumber, out int selectedToppingMenuNumber))
-    {
-        var selectedToppingInfoIndex = selectedToppingMenuNumber - 1;
-        var selectedToppingInfo = toppingInfos[selectedToppingInfoIndex];
-        var selectedTopping = toppingManager
-            .Get(selectedToppingInfo.Name);
+    var toppingMenuNumbers = toppingInput
+        .Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-        selectedPizza.Toppings.Add(selectedTopping);
+    var maxToppingMenuNumber = toppingInfos.Count;
+
+    foreach (var menuNumber in toppingMenuNumbers)
+    {
+        if (int.TryParse(menuNumber, out int selectedToppingMenuNumber) &&
+            selectedToppingMenuNumber <= maxToppingMenuNumber)
+        {
+            var selectedToppingInfoIndex = selectedToppingMenuNumber - 1;
+            var selectedToppingInfo = toppingInfos[selectedToppingInfoIndex];
+
+            if (selectedPizza.Toppings
+                .Any(t => t.Name == selectedToppingInfo.Name))
+            {
+                continue;
+            }
+
+            var selectedTopping = toppingManager
+                .Get(selectedToppingInfo.Name);
+
+            selectedPizza.Toppings.Add(selectedTopping);
+        }
+        else
+        {
+            Console.WriteLine("Niewlasciwy wybor dodatku");
+            return;
+        }
     }
 }
 
