@@ -1,5 +1,7 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Managers.Toppings;
+using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
+
 
 // Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
@@ -47,6 +49,35 @@ if (selectedSize == Sizes.None)
     return;
 }
 
+var toppingManager = new Manager();
+var toppingInfos = toppingManager.GetForMenu();
+
+foreach (var info in toppingInfos)
+{
+    Console.WriteLine($"[{info.MenuNumber}]: {info.Name}");
+}
+
+
+var toppingInput = Console.ReadLine();
+
+var toppingMenuNumbers = toppingInput!
+    .Split(",", StringSplitOptions.RemoveEmptyEntries);
+
+foreach (var menuNumber in toppingMenuNumbers)
+{
+    if (int.TryParse(menuNumber, out int selectedToppingMenuNumber))
+    {
+        var selectedToppingInfoIndex = selectedToppingMenuNumber - 1;
+        var selectedToppingInfo = toppingInfos[selectedToppingInfoIndex];
+        var selectedTopping = toppingManager
+            .Get(selectedToppingInfo.Name);
+
+        selectedPizza.Toppings.Add(selectedTopping);
+    }
+}
+
 Console.WriteLine($"{selectedPizza.Name}, {selectedSize}");
+selectedPizza.Toppings
+    .ForEach(t => Console.WriteLine($"{t.Name}"));
 
 Console.ReadLine();

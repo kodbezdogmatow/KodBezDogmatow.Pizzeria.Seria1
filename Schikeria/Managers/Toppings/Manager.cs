@@ -68,6 +68,22 @@ namespace Schikeria.Managers.Toppings
             return _toppings.First(x => x.Name == name);
         }
 
+        public List<MenuToppingInfo> GetForMenu()
+        {
+            return _toppings
+                .Select(t => new MenuToppingInfo
+                {
+                    Name = t.Name,
+                    MenuNumber = GetMenuItemPosition(t),
+                })
+                .ToList();
+        }
+
+        private int GetMenuItemPosition(Topping t)
+        {
+            return _toppings.IndexOf(t) + 1;
+        }
+
         // TODO: Zmien nazwe na bardziej opisowa i prawidlowa gramatycznie
         public List<Topping> GetAllNotMeat()
         {
