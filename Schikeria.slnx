@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Schikeria.Test/Schikeria.Test.csproj" Id="535bfac9-7a5d-4676-a331-2cf6e9ff1c60" />
   <Project Path="Schikeria/Schikeria.csproj" />
 </Solution>
