@@ -2,6 +2,14 @@
 using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
+
+//10 % rabatu dla zamówień powyżej 100 zł,
+//15% rabatu dla studentów,
+//20% rabatu w poniedziałek.
+//20% dla VIP.
+
+//Na razie rabaty się nie łączą — obowiązuje jeden, najwyższy rabat.
+
 // Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();
