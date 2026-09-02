@@ -9,7 +9,7 @@ namespace Schikeria.Managers.Discounts
         public Manager()
         {
             _discounts = [
-                    new Discount
+                    new PriceDiscount
                     {
                         Name = "Powyżej 100 zł",
                         Value = 0.1m,
