@@ -12,6 +12,7 @@ namespace Schikeria.Model.Pizzas
 
         public Sizes CurrentSize { get; set; }
         public Discount? CurrentDiscount { get; set; }
+        public int Count { get; set; } = 1;
 
         public decimal Price
         {
@@ -20,12 +21,23 @@ namespace Schikeria.Model.Pizzas
                 var pizzaPrice = Sizes[CurrentSize];
                 var toppingsPrice = Toppings.Sum(t => t.Price);
                 var totalPrice = pizzaPrice + toppingsPrice;
-                
+                var isValid = false;
+
                 if (CurrentDiscount != null)
                 {
+                    isValid = true;
+
                     var percentagePriceValue = 1m;
-                    if (CurrentDiscount.MinPrice == null ||
-                        totalPrice >= CurrentDiscount.MinPrice)
+                    if (CurrentDiscount is PriceDiscount priceDiscount)
+                    {
+                        isValid = totalPrice >= priceDiscount.MinPrice;
+                    }
+                    else if (CurrentDiscount is GroupDiscount groupDiscount)
+                    {
+                        isValid =  Count >= groupDiscount.MinCount;
+                    }
+
+                    if (isValid)
                     {
                         percentagePriceValue = 1 - CurrentDiscount.Value;
                     }

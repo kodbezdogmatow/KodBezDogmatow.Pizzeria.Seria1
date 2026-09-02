@@ -3,10 +3,13 @@ using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
 
-//10 % rabatu dla zamówień powyżej 100 zł,
-//15% rabatu dla studentów,
-//20% rabatu w poniedziałek.
-//20% dla VIP.
+//Pojawia się promocja zależna od liczby pizz:
+
+//2 pizze → 5%,
+//3 pizze → 10%,
+//5 lub więcej → 15%.
+
+//Rabat grupowy jest liczony zamiast zwykłego rabatu.
 
 //Na razie rabaty się nie łączą — obowiązuje jeden, najwyższy rabat.
 
