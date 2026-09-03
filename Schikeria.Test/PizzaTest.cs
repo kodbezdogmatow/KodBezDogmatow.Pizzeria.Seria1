@@ -54,11 +54,12 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new Discount
-            {
-                Name = "D1",
-                Value = 0.1m
-            };
+            pizza.CurrentDiscounts = [
+                new Discount
+                {
+                    Name = "D1",
+                    Value = 0.1m
+                }];
 
             // Act
             var price = pizza.Price;
@@ -89,12 +90,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new PriceDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinPrice = 30m
-            };
+            pizza.CurrentDiscounts = [
+                new PriceDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinPrice = 30m
+                }];
 
             // Act
             var price = pizza.Price;
@@ -125,12 +127,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new PriceDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinPrice = 35m
-            };
+            pizza.CurrentDiscounts = [
+                new PriceDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinPrice = 35m
+                }];
 
             // Act
             var price = pizza.Price;
@@ -161,12 +164,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new PriceDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinPrice = 33m
-            };
+            pizza.CurrentDiscounts = [
+                new PriceDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinPrice = 33m
+                }];
 
             // Act
             var price = pizza.Price;
@@ -198,12 +202,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new GroupDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinCount = 3
-            };
+            pizza.CurrentDiscounts = [
+                new GroupDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinCount = 3
+                }];
 
             // Act
             var price = pizza.Price;
@@ -235,12 +240,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new GroupDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinCount = 3
-            };
+            pizza.CurrentDiscounts = [
+                new GroupDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinCount = 3
+                }];
 
             // Act
             var price = pizza.Price;
@@ -272,12 +278,13 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscount = new GroupDiscount
-            {
-                Name = "D1",
-                Value = 0.1m,
-                MinCount = 3
-            };
+            pizza.CurrentDiscounts = [
+                new GroupDiscount
+                {
+                    Name = "D1",
+                    Value = 0.1m,
+                    MinCount = 3
+                }];
 
             // Act
             var price = pizza.Price;

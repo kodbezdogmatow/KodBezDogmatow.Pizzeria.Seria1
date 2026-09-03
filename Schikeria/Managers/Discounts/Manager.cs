@@ -1,4 +1,5 @@
-﻿using Schikeria.Model.Discounts;
+﻿using Schikeria.Constants.Discounts;
+using Schikeria.Model.Discounts;
 
 namespace Schikeria.Managers.Discounts
 {
@@ -11,24 +12,42 @@ namespace Schikeria.Managers.Discounts
             _discounts = [
                     new PriceDiscount
                     {
-                        Name = "Powyżej 100 zł",
+                        Name = Names.Price100zl,
                         Value = 0.1m,
                         MinPrice = 100m
                     },
                     new Discount
                     {
-                        Name = "Dla Studentów",
+                        Name = Names.Student,
                         Value = 0.15m
                     },
                     new Discount
                     {
-                        Name = "W Poniedziałek",
+                        Name = Names.Monday,
                         Value = 0.2m
                     },
                     new Discount
                     {
-                        Name = "VIP",
+                        Name = Names.VIP,
                         Value = 0.2m
+                    },
+                    new GroupDiscount
+                    {
+                        Name = Names.Group2,
+                        Value = 0.05m,
+                        MinCount = 2
+                    },
+                    new GroupDiscount
+                    {
+                        Name = Names.Group3,
+                        Value = 0.1m,
+                        MinCount = 3
+                    },
+                    new GroupDiscount
+                    {
+                        Name = Names.Group5,
+                        Value = 0.15m,
+                        MinCount = 5
                     },
                 ];
         }
