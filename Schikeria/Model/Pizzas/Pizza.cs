@@ -27,31 +27,13 @@ namespace Schikeria.Model.Pizzas
                 {
                     var sumDiscountValue = 0m;
 
-                    // 2. Niektóre rabaty można łączyć.
-
-                    //Przykładowo:
-
-                    //student + poniedziałek → można połączyć,
-                    //VIP +poniedziałek → można połączyć,
-
-                    //rabat grupowy + VIP → można.
-
-                    //rabat grupowy + inny niz vip → zawsze grupowy,
-
-                    //jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, to tylko rabat grupowy
-                    //jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, zaden grupowy, to najwyzszy rabat
-
-                    //Dochodzi też zasada:
-
-                    //maksymalny łączny rabat to 30%.
-
                     // Sprawdzanie kombinacji
                     var maxGroupDiscount = CurrentDiscounts
                         .OfType<GroupDiscount>()
                         .OrderByDescending(d => d.Value)
                         .FirstOrDefault();
 
-                    if (maxGroupDiscount  != null)
+                    if (maxGroupDiscount != null)
                     {
                         var vipDiscount = CurrentDiscounts
                             .FirstOrDefault(m => m.Name == Names.VIP);
@@ -62,7 +44,7 @@ namespace Schikeria.Model.Pizzas
                         }
                         else
                         {
-                            sumDiscountValue = maxGroupDiscount.Value;
+                            sumDiscountValue = GetMaxDiscountValue(totalPrice);
                         }
                     }
                     else
@@ -83,19 +65,25 @@ namespace Schikeria.Model.Pizzas
                                 sumDiscountValue = studentDiscount.Value > vipDiscount.Value
                                     ? studentDiscount.Value
                                     : vipDiscount.Value;
+
+                                sumDiscountValue += mondayDiscount.Value;
                             }
                             else if (studentDiscount != null)
                             {
-                                sumDiscountValue = studentDiscount.Value;
+                                sumDiscountValue = studentDiscount.Value + mondayDiscount.Value;
                             }
                             else if (vipDiscount != null)
                             {
-                                sumDiscountValue = vipDiscount.Value;
+                                sumDiscountValue = vipDiscount.Value + mondayDiscount.Value;
+                            }
+                            else
+                            {
+                                sumDiscountValue = GetMaxDiscountValue(totalPrice);
                             }
                         }
                         else
                         {
-                            sumDiscountValue = CurrentDiscounts.Max(m => m.Value);
+                            sumDiscountValue = GetMaxDiscountValue(totalPrice);
                         }
                     }
 
@@ -111,7 +99,7 @@ namespace Schikeria.Model.Pizzas
 
                     //if (isValid)
                     //{
-                        var percentagePriceValue = 1 - sumDiscountValue;
+                    var percentagePriceValue = 1 - sumDiscountValue;
                     //}
 
                     totalPrice *= percentagePriceValue;
@@ -119,6 +107,45 @@ namespace Schikeria.Model.Pizzas
 
                 return totalPrice;
             }
+        }
+
+        private decimal GetMaxDiscountValue(decimal totalPrice)
+        {
+            var discountValue = 0m;
+            var sortedDiscounts = CurrentDiscounts
+                .OrderByDescending(d => d.Value)
+                .ToList();
+
+            foreach (var discount in sortedDiscounts)
+            {
+                if (discount != null)
+                {
+                    if (discount is PriceDiscount priceDiscount)
+                    {
+                        if (totalPrice >= priceDiscount.MinPrice)
+                        {
+                            discountValue = priceDiscount.Value;
+                            break;
+                        }
+                    }
+                    else if (discount is GroupDiscount groupDiscount)
+                    {
+                        if (Count >= groupDiscount.MinCount)
+                        {
+                            discountValue = groupDiscount.Value;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // TODO: jesli grupowy w liscie, to wez ten rabat
+                        discountValue = discount.Value;
+                        break;
+                    }
+                }
+            }
+
+            return discountValue;
         }
     }
 }
