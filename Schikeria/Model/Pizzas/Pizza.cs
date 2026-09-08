@@ -112,7 +112,23 @@ namespace Schikeria.Model.Pizzas
         private decimal GetMaxDiscountValue(decimal totalPrice)
         {
             var discountValue = 0m;
+
+            var groupDiscounts = CurrentDiscounts
+                .OfType<GroupDiscount>()
+                .ToList();
+
+            var maxGroupDiscount = groupDiscounts
+                .Where(gd => Count >= gd.MinCount)
+                .OrderByDescending(d => d.Value)
+                .FirstOrDefault();
+
+            if (maxGroupDiscount != null)
+            {
+                return maxGroupDiscount.Value;
+            }
+
             var sortedDiscounts = CurrentDiscounts
+                .Except(groupDiscounts)
                 .OrderByDescending(d => d.Value)
                 .ToList();
 
@@ -128,17 +144,8 @@ namespace Schikeria.Model.Pizzas
                             break;
                         }
                     }
-                    else if (discount is GroupDiscount groupDiscount)
-                    {
-                        if (Count >= groupDiscount.MinCount)
-                        {
-                            discountValue = groupDiscount.Value;
-                            break;
-                        }
-                    }
                     else
                     {
-                        // TODO: jesli grupowy w liscie, to wez ten rabat
                         discountValue = discount.Value;
                         break;
                     }

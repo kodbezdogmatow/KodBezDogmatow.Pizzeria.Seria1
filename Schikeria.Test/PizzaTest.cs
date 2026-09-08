@@ -496,7 +496,7 @@ namespace Schikeria.Test
                     new Topping {Name = "T1", Price = 1m},
                     new Topping {Name = "T1", Price = 1.5m}
                     ],
-                Count = 2
+                Count = 3
             };
 
             pizza.Sizes.Add(Sizes.Small, 10);
@@ -532,6 +532,61 @@ namespace Schikeria.Test
             });
         }
 
+        [Fact]
+        public void Calculate_Price_DiffrentDiscouts_TakeMaxValidGroupDiscountValue()
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = "Test",
+                CurrentSize = Sizes.Large,
+                Toppings = [
+                    new Topping {Name = "T1", Price = 0.5m},
+                    new Topping {Name = "T1", Price = 1m},
+                    new Topping {Name = "T1", Price = 1.5m}
+                    ],
+                Count = 2
+            };
+
+            pizza.Sizes.Add(Sizes.Small, 10);
+            pizza.Sizes.Add(Sizes.Medium, 20);
+            pizza.Sizes.Add(Sizes.Large, 30);
+
+            pizza.CurrentDiscounts = [
+                new Discount
+                {
+                    Name = "D1",
+                    Value = 0.12m,
+                },
+                new GroupDiscount
+                {
+                    Name = "GD1",
+                    Value = 0.2m,
+                    MinCount = 3
+                },
+                  new GroupDiscount
+                {
+                    Name = "GD2",
+                    Value = 0.1m,
+                    MinCount = 2
+                },
+                new Discount
+                {
+                    Name = "D2",
+                    Value = 0.25m,
+                }
+            ];
+
+            // Act
+            var price = pizza.Price;
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(29.7m, price);
+            });
+        }
+
         // 2. Niektóre rabaty można łączyć.
 
         //Przykładowo:
@@ -548,6 +603,6 @@ namespace Schikeria.Test
 
         //Dochodzi też zasada:
 
-        //maksymalny łączny rabat to 30%.
+        //TODO: maksymalny łączny rabat to 30%.
     }
 }
