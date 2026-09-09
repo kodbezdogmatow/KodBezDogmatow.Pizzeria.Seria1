@@ -41,6 +41,11 @@ namespace Schikeria.Model.Pizzas
                         if (vipDiscount != null)
                         {
                             sumDiscountValue = maxGroupDiscount.Value + vipDiscount.Value;
+
+                            if (sumDiscountValue > 0.3m)
+                            {
+                                sumDiscountValue = 0.3m;
+                            }
                         }
                         else
                         {
@@ -67,14 +72,29 @@ namespace Schikeria.Model.Pizzas
                                     : vipDiscount.Value;
 
                                 sumDiscountValue += mondayDiscount.Value;
+
+                                if (sumDiscountValue > 0.3m)
+                                {
+                                    sumDiscountValue = 0.3m;
+                                }
                             }
                             else if (studentDiscount != null)
                             {
                                 sumDiscountValue = studentDiscount.Value + mondayDiscount.Value;
+
+                                if (sumDiscountValue > 0.3m)
+                                {
+                                    sumDiscountValue = 0.3m;
+                                }
                             }
                             else if (vipDiscount != null)
                             {
                                 sumDiscountValue = vipDiscount.Value + mondayDiscount.Value;
+
+                                if (sumDiscountValue > 0.3m)
+                                {
+                                    sumDiscountValue = 0.3m;
+                                }
                             }
                             else
                             {

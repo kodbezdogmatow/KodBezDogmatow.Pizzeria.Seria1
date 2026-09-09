@@ -587,22 +587,140 @@ namespace Schikeria.Test
             });
         }
 
-        // 2. Niektóre rabaty można łączyć.
+        [Fact]
+        public void Calculate_Price_GroupDiscout_Combination_MoreThan30_Successfully()
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = "Test",
+                CurrentSize = Sizes.Large,
+                Toppings = [
+                    new Topping {Name = "T1", Price = 0.5m},
+                    new Topping {Name = "T1", Price = 1m},
+                    new Topping {Name = "T1", Price = 1.5m}
+                    ],
+                Count = 2
+            };
 
-        //Przykładowo:
+            pizza.Sizes.Add(Sizes.Small, 10);
+            pizza.Sizes.Add(Sizes.Medium, 20);
+            pizza.Sizes.Add(Sizes.Large, 30);
 
-        //student + poniedziałek → można połączyć,
-        //VIP +poniedziałek → można połączyć,
+            pizza.CurrentDiscounts = [
+                new GroupDiscount
+                {
+                    Name = "D1",
+                    Value = 0.2m,
+                    MinCount = 3
+                },
+                new Discount
+                {
+                    Name = Names.VIP,
+                    Value = 0.22m,
+                }
+            ];
 
-        //rabat grupowy + VIP → można.
+            // Act
+            var price = pizza.Price;
 
-        //rabat grupowy + inny niz vip → zawsze grupowy,
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(23.1m, price);
+            });
+        }
 
-        //jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, to tylko rabat grupowy
-        //jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, zaden grupowy, to najwyzszy rabat
+        [Theory]
+        [InlineData(Names.VIP)]
+        [InlineData(Names.Student)]
+        public void Calculate_Price_WithNormalDiscount_Combination_MoreThan30_Successfully(
+           string secondDiscountName)
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = "Test",
+                CurrentSize = Sizes.Large,
+                Toppings = [
+                    new Topping {Name = "T1", Price = 0.5m},
+                    new Topping {Name = "T1", Price = 1m},
+                    new Topping {Name = "T1", Price = 1.5m}
+                    ]
+            };
 
-        //Dochodzi też zasada:
+            pizza.Sizes.Add(Sizes.Small, 10);
+            pizza.Sizes.Add(Sizes.Medium, 20);
+            pizza.Sizes.Add(Sizes.Large, 30);
 
-        //TODO: maksymalny łączny rabat to 30%.
+            pizza.CurrentDiscounts = [
+                new Discount
+                {
+                    Name = Names.Monday,
+                    Value = 0.1m
+                },
+                new Discount
+                {
+                    Name = secondDiscountName,
+                    Value = 0.25m
+                }
+            ];
+
+            // Act
+            var price = pizza.Price;
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(23.1m, price);
+            });
+        }
+
+        [Fact]
+        public void Calculate_Price_WithMondayDiscount_AndOtherDiscountsCombination_MoreThan30()
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = "Test",
+                CurrentSize = Sizes.Large,
+                Toppings = [
+                    new Topping {Name = "T1", Price = 0.5m},
+                    new Topping {Name = "T1", Price = 1m},
+                    new Topping {Name = "T1", Price = 1.5m}
+                    ]
+            };
+
+            pizza.Sizes.Add(Sizes.Small, 10);
+            pizza.Sizes.Add(Sizes.Medium, 20);
+            pizza.Sizes.Add(Sizes.Large, 30);
+
+            pizza.CurrentDiscounts = [
+                new Discount
+                {
+                    Name = Names.Monday,
+                    Value = 0.1m
+                },
+                new Discount
+                {
+                    Name = Names.VIP,
+                    Value = 0.25m
+                },
+                new Discount
+                {
+                    Name = Names.Student,
+                    Value = 0.19m
+                }
+            ];
+
+            // Act
+            var price = pizza.Price;
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(23.1m, price);
+            });
+        }
     }
 }
