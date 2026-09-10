@@ -22,6 +22,7 @@ namespace Schikeria.Model.Pizzas
                 var pizzaPrice = Sizes[CurrentSize];
                 var toppingsPrice = Toppings.Sum(t => t.Price);
                 var totalPrice = pizzaPrice + toppingsPrice;
+                (decimal?, decimal?) currencyDiscountResult = (null, null);
 
                 if (CurrentDiscounts.Count > 0)
                 {
@@ -55,21 +56,19 @@ namespace Schikeria.Model.Pizzas
                     else
                     {
                         sumDiscountValue = GetDiscountPercentValue(totalPrice);
+                     
+                        currencyDiscountResult = GetDiscountCurrencyValue(
+                            Names.VIP, Names.Loyality);
 
-                        // lojalnościowy + Vip
-                        // Rabat sezonowy + Student
-                        var sumDiscountCurrencyValue = GetDiscountCurrencyValue(
-                            Names.Loyality, Names.VIP);
-
-                        if (sumDiscountCurrencyValue == null)
+                        if (currencyDiscountResult.Item1 == null)
                         {
-                            sumDiscountCurrencyValue = GetDiscountCurrencyValue(
-                                Names.Saison, Names.Student);
+                            currencyDiscountResult = GetDiscountCurrencyValue(
+                                Names.Student, Names.Saison);
                         }
 
-                        if (sumDiscountCurrencyValue != null)
+                        if (currencyDiscountResult.Item1 != null)
                         {
-                            sumDiscountValue = sumDiscountCurrencyValue.Value;
+                            sumDiscountValue = currencyDiscountResult.Item1.Value;
 
                             if (sumDiscountValue > 0.3m)
                             {
@@ -77,44 +76,39 @@ namespace Schikeria.Model.Pizzas
                             }
                         }
                     }
-
-                    //var percentagePriceValue = 1m;
-                    //if (CurrentDiscounts is PriceDiscount priceDiscount)
-                    //{
-                    //    isValid = totalPrice >= priceDiscount.MinPrice;
-                    //}
-                    //else if (CurrentDiscounts is GroupDiscount groupDiscount)
-                    //{
-                    //    isValid =  Count >= groupDiscount.MinCount;
-                    //}
-
-                    //if (isValid)
-                    //{
+ 
                     var percentagePriceValue = 1 - sumDiscountValue;
-                    //}
 
+                    // Najpierw naliczamy rabaty procentowe, a pozniej rabaty cenowe
                     totalPrice *= percentagePriceValue;
+
+                    if (currencyDiscountResult.Item1 != null)
+                    {
+                        totalPrice -= currencyDiscountResult.Item2!.Value;
+                    }
                 }
 
                 return totalPrice;
             }
         }
 
-        private decimal? GetDiscountCurrencyValue(
-            string firstDiscountName,
-            string secondDiscountName)
+        private (decimal?, decimal?) GetDiscountCurrencyValue(
+            string percentDiscountName,
+            string currencyDiscountName)
         {
-            decimal? sumDiscountValue = null;
-            if (CurrentDiscounts.Any(d => d.Name == firstDiscountName) &&
-                CurrentDiscounts.Any(d => d.Name == secondDiscountName))
+            decimal? percentDiscountValue = null;
+            decimal? currencyDiscountValue = null;
+            if (CurrentDiscounts.Any(d => d.Name == percentDiscountName) &&
+                CurrentDiscounts.Any(d => d.Name == currencyDiscountName))
             {
-                sumDiscountValue = CurrentDiscounts
-                    .First(d => d.Name == Names.Loyality).Value +
-                    CurrentDiscounts
-                    .First(d => d.Name == Names.VIP).Value;
+                percentDiscountValue = CurrentDiscounts
+                    .First(d => d.Name == percentDiscountName).Value;
+
+                currencyDiscountValue = CurrentDiscounts
+                    .First(d => d.Name == currencyDiscountName).Value;
             }
 
-            return sumDiscountValue;
+            return (percentDiscountValue, currencyDiscountValue);
         }
 
         private decimal GetDiscountPercentValue(decimal totalPrice)

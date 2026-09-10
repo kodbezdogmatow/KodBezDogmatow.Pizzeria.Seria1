@@ -722,5 +722,53 @@ namespace Schikeria.Test
                 Assert.Equal(23.1m, price);
             });
         }
+
+
+        // lojalnościowy + Vip
+        // Rabat sezonowy + Student
+        [Theory]
+        [InlineData(Names.VIP, Names.Loyality)]
+        [InlineData(Names.Student, Names.Saison)]
+        public void Calculate_Price_WithCurrancyDiscount_Combination_Successfully(
+            string percentDiscountName, string currencyDiscountName)
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = "Test",
+                CurrentSize = Sizes.Large,
+                Toppings = [
+                    new Topping {Name = "T1", Price = 0.5m},
+                    new Topping {Name = "T1", Price = 1m},
+                    new Topping {Name = "T1", Price = 1.5m}
+                    ]
+            };
+
+            pizza.Sizes.Add(Sizes.Small, 10);
+            pizza.Sizes.Add(Sizes.Medium, 20);
+            pizza.Sizes.Add(Sizes.Large, 30);
+
+            pizza.CurrentDiscounts = [
+                new CurrancyDiscount
+                {
+                    Name = percentDiscountName,
+                    Value = 0.1m
+                },
+                new CurrancyDiscount
+                {
+                    Name = currencyDiscountName,
+                    Value = 1.5m
+                }
+            ];
+
+            // Act
+            var price = pizza.Price;
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.Equal(28.2m, price);
+            });
+        }
     }
 }
