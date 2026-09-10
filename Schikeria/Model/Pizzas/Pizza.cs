@@ -54,56 +54,27 @@ namespace Schikeria.Model.Pizzas
                     }
                     else
                     {
-                        //student + poniedziałek → można połączyć,
-                        //VIP + poniedziałek → można połączyć,
-                        var mondayDiscount = CurrentDiscounts
-                            .FirstOrDefault(m => m.Name == Names.Monday);
-                        if (mondayDiscount != null)
+                        sumDiscountValue = GetDiscountPercentValue(totalPrice);
+
+                        // lojalnościowy + Vip
+                        // Rabat sezonowy + Student
+                        var sumDiscountCurrencyValue = GetDiscountCurrencyValue(
+                            Names.Loyality, Names.VIP);
+
+                        if (sumDiscountCurrencyValue == null)
                         {
-                            var studentDiscount = CurrentDiscounts
-                                .FirstOrDefault(m => m.Name == Names.Student);
-                            var vipDiscount = CurrentDiscounts
-                                .FirstOrDefault(m => m.Name == Names.VIP);
-
-                            if (studentDiscount != null && vipDiscount != null)
-                            {
-                                sumDiscountValue = studentDiscount.Value > vipDiscount.Value
-                                    ? studentDiscount.Value
-                                    : vipDiscount.Value;
-
-                                sumDiscountValue += mondayDiscount.Value;
-
-                                if (sumDiscountValue > 0.3m)
-                                {
-                                    sumDiscountValue = 0.3m;
-                                }
-                            }
-                            else if (studentDiscount != null)
-                            {
-                                sumDiscountValue = studentDiscount.Value + mondayDiscount.Value;
-
-                                if (sumDiscountValue > 0.3m)
-                                {
-                                    sumDiscountValue = 0.3m;
-                                }
-                            }
-                            else if (vipDiscount != null)
-                            {
-                                sumDiscountValue = vipDiscount.Value + mondayDiscount.Value;
-
-                                if (sumDiscountValue > 0.3m)
-                                {
-                                    sumDiscountValue = 0.3m;
-                                }
-                            }
-                            else
-                            {
-                                sumDiscountValue = GetMaxDiscountValue(totalPrice);
-                            }
+                            sumDiscountCurrencyValue = GetDiscountCurrencyValue(
+                                Names.Saison, Names.Student);
                         }
-                        else
+
+                        if (sumDiscountCurrencyValue != null)
                         {
-                            sumDiscountValue = GetMaxDiscountValue(totalPrice);
+                            sumDiscountValue = sumDiscountCurrencyValue.Value;
+
+                            if (sumDiscountValue > 0.3m)
+                            {
+                                sumDiscountValue = 0.3m;
+                            }
                         }
                     }
 
@@ -127,6 +98,81 @@ namespace Schikeria.Model.Pizzas
 
                 return totalPrice;
             }
+        }
+
+        private decimal? GetDiscountCurrencyValue(
+            string firstDiscountName,
+            string secondDiscountName)
+        {
+            decimal? sumDiscountValue = null;
+            if (CurrentDiscounts.Any(d => d.Name == firstDiscountName) &&
+                CurrentDiscounts.Any(d => d.Name == secondDiscountName))
+            {
+                sumDiscountValue = CurrentDiscounts
+                    .First(d => d.Name == Names.Loyality).Value +
+                    CurrentDiscounts
+                    .First(d => d.Name == Names.VIP).Value;
+            }
+
+            return sumDiscountValue;
+        }
+
+        private decimal GetDiscountPercentValue(decimal totalPrice)
+        {
+            decimal sumDiscountValue;
+            //student + poniedziałek → można połączyć,
+            //VIP + poniedziałek → można połączyć,
+            var mondayDiscount = CurrentDiscounts
+                .FirstOrDefault(m => m.Name == Names.Monday);
+            if (mondayDiscount != null)
+            {
+                var studentDiscount = CurrentDiscounts
+                    .FirstOrDefault(m => m.Name == Names.Student);
+                var vipDiscount = CurrentDiscounts
+                    .FirstOrDefault(m => m.Name == Names.VIP);
+
+                if (studentDiscount != null && vipDiscount != null)
+                {
+                    sumDiscountValue = studentDiscount.Value > vipDiscount.Value
+                        ? studentDiscount.Value
+                        : vipDiscount.Value;
+
+                    sumDiscountValue += mondayDiscount.Value;
+
+                    if (sumDiscountValue > 0.3m)
+                    {
+                        sumDiscountValue = 0.3m;
+                    }
+                }
+                else if (studentDiscount != null)
+                {
+                    sumDiscountValue = studentDiscount.Value + mondayDiscount.Value;
+
+                    if (sumDiscountValue > 0.3m)
+                    {
+                        sumDiscountValue = 0.3m;
+                    }
+                }
+                else if (vipDiscount != null)
+                {
+                    sumDiscountValue = vipDiscount.Value + mondayDiscount.Value;
+
+                    if (sumDiscountValue > 0.3m)
+                    {
+                        sumDiscountValue = 0.3m;
+                    }
+                }
+                else
+                {
+                    sumDiscountValue = GetMaxDiscountValue(totalPrice);
+                }
+            }
+            else
+            {
+                sumDiscountValue = GetMaxDiscountValue(totalPrice);
+            }
+
+            return sumDiscountValue;
         }
 
         private decimal GetMaxDiscountValue(decimal totalPrice)
