@@ -49,6 +49,21 @@ namespace Schikeria.Managers.Discounts
                         Value = 0.15m,
                         MinCount = 5
                     },
+                    new CurrancyDiscount
+                    {
+                        Name = Names.Loyality,
+                        Value = 0.15m,
+                    },
+                    new CurrancyDiscount
+                    {
+                        Name = Names.Saison,
+                        Value = 0.25m,
+                    },
+                    new CurrancyDiscount
+                    {
+                        Name = Names.Sale,
+                        Value = 0.30m,
+                    },
                 ];
         }
     }

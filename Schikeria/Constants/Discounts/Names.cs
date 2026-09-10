@@ -9,5 +9,8 @@
         public const string Group2 = "Grupowy 2";
         public const string Group3 = "Grupowy 3";
         public const string Group5 = "Grupowy 5";
+        public const string Loyality = "Rabat lojalnościowy";
+        public const string Saison = "Rabat sezonowy";
+        public const string Sale = "Rabat promocyjny";
     }
 }
