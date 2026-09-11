@@ -13,6 +13,7 @@ namespace Schikeria.Providers.Pizzas
                 Name = Names.Margherita,
             };
 
+            // TODO: Zdefiniowac odpowiedzialnosc(i) Pizzy. Cena za rozmiar pizzy nie potrzebuje na tym etapie.
             margherita.Sizes.Add(Sizes.Small, 27.5m);
             margherita.Sizes.Add(Sizes.Medium, 30);
             margherita.Sizes.Add(Sizes.Large, 32.7m);
