@@ -6,7 +6,7 @@ namespace Schikeria.Model.Pizzas
 {
     public class Pizza
     {
-        // REFACTOR: Nie intuicyjne, ciezkie do "zarzadzania"
+        // TODO: Overhead - uproscic
         public Dictionary<Sizes, decimal> Sizes { get; set; } = [];
         public required string Name { get; set; }
         public List<Topping> Toppings { get; set; } = [];
@@ -22,8 +22,11 @@ namespace Schikeria.Model.Pizzas
                 var pizzaPrice = Sizes[CurrentSize];
                 var toppingsPrice = Toppings.Sum(t => t.Price);
                 var totalPrice = pizzaPrice + toppingsPrice;
+
+                // TODO: Bez krotek -> uzyc klassy -> nazwac to co jest zwracane
                 (decimal?, decimal?) currencyDiscountResult = (null, null);
 
+                // NOTE: Hierarchia rabatow
                 if (CurrentDiscounts.Count > 0)
                 {
                     var sumDiscountValue = 0m;
@@ -36,6 +39,7 @@ namespace Schikeria.Model.Pizzas
 
                     if (maxGroupDiscount != null)
                     {
+                        // TODO: Kombinacja rabatow grupowych - wydzielic
                         var vipDiscount = CurrentDiscounts
                             .FirstOrDefault(m => m.Name == Names.VIP);
 
@@ -60,6 +64,8 @@ namespace Schikeria.Model.Pizzas
                         currencyDiscountResult = GetDiscountCurrencyValue(
                             Names.VIP, Names.Loyality);
 
+                        // TODO: Czy na pewno rabat procentowy moze byc nadpisany przez rabat kwotowy?!
+                        // TODO: !Krotki
                         if (currencyDiscountResult.Item1 == null)
                         {
                             currencyDiscountResult = GetDiscountCurrencyValue(
@@ -84,6 +90,7 @@ namespace Schikeria.Model.Pizzas
 
                     if (currencyDiscountResult.Item1 != null)
                     {
+                        // NOTE: Naliczanie kwotowe
                         totalPrice -= currencyDiscountResult.Item2!.Value;
                     }
                 }
@@ -169,6 +176,7 @@ namespace Schikeria.Model.Pizzas
             return sumDiscountValue;
         }
 
+        // NOTE: Sprawdza rabaty i zwraca max wartosci rabatu
         private decimal GetMaxDiscountValue(decimal totalPrice)
         {
             var discountValue = 0m;

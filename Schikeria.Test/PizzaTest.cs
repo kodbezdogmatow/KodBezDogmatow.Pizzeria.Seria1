@@ -5,6 +5,25 @@ using Schikeria.Model.Toppings;
 
 namespace Schikeria.Test
 {
+    //  - R1 — Rozwijalność
+    //  Dodanie nowej funkcjonalności dla jednego klienta powinno wymagać możliwie małej liczby zmian
+    //  w istniejącym kodzie.
+
+    //  - R2 — Wielu klientów
+    //  Aplikacja będzie wykorzystywana przez wielu klientów, którzy mogą posiadać różne zasady biznesowe.
+
+    //  - R3 — Konfigurowalność
+    //  Wybrane zachowania aplikacji powinny być możliwe do skonfigurowania niezależnie
+    //  dla poszczególnych klientów.
+
+    //  - R4 — Rozdzielenie zachowań
+    //  Różnice w sposobie działania wynikające z wymagań konkretnego klienta nie
+    //  powinny wymagać przepisywania całej głównej logiki aplikacji.
+
+    //  - R5 — Bezpieczeństwo zmian
+    //  Refaktoryzacja istniejącego kodu nie powinna zmieniać jego dotychczasowego zachowania,
+    //  o ile nie wynika to bezpośrednio z nowego wymagania.
+
     public class PizzaTest
     {
         [Fact]
@@ -503,7 +522,7 @@ namespace Schikeria.Test
             pizza.Sizes.Add(Sizes.Medium, 20);
             pizza.Sizes.Add(Sizes.Large, 30);
 
-            pizza.CurrentDiscounts = [            
+            pizza.CurrentDiscounts = [
                 new Discount
                 {
                     Name = "D1",
