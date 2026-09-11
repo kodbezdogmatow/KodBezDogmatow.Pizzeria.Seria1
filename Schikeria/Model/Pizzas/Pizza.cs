@@ -8,11 +8,14 @@ namespace Schikeria.Model.Pizzas
     {
         // TODO: Overhead - uproscic
         public Dictionary<Sizes, decimal> Sizes { get; set; } = [];
+
         public required string Name { get; set; }
         public List<Topping> Toppings { get; set; } = [];
 
         public Sizes CurrentSize { get; set; }
         public List<Discount> CurrentDiscounts { get; set; } = [];
+
+        // NOTE: ! Klasa pizza nie jest tylko modelem Pizzy
         public int Count { get; set; } = 1;
 
         public decimal Price

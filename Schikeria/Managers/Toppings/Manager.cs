@@ -68,6 +68,7 @@ namespace Schikeria.Managers.Toppings
             return _toppings.First(x => x.Name == name);
         }
 
+        // TODO: Dlaczego manager wie o logice GUI (menu)
         public List<MenuToppingInfo> GetForMenu(Pizza pizza)
         {
             var allToppings = _toppings;
@@ -86,6 +87,7 @@ namespace Schikeria.Managers.Toppings
                 .ToList();
         }
 
+        // TODO: Cieakwe? Obserwowac
         private List<Topping> GetAllNonMeat()
         {
             return _toppings
