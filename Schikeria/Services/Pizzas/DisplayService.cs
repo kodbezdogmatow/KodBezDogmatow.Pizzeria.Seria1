@@ -8,19 +8,21 @@ namespace Schikeria.Services.Pizzas
         {
             Console.WriteLine($"{pizza.Name}:");
 
-            foreach (var sizePrice in pizza.Sizes)
-            {
-                Console.WriteLine($"\t{sizePrice.Key}: {sizePrice.Value} ZL");
-            }
+            // TODO: Wyswielt ceny za rozmiar pizzy
+            //foreach (var sizePrice in pizza.Sizes)
+            //{
+            //    Console.WriteLine($"\t{sizePrice.Key}: {sizePrice.Value} ZL");
+            //}
         }
 
         public void Display(Pizza pizza, Sizes size)
         {
-            var price = pizza.Sizes[size];
-            Console.WriteLine($"{pizza.Name}: {size}, {price} ZL");
+            // TODO: Wyswielt ceny za rozmiar pizzy
+            //var price = pizza.Sizes[size];
+            //Console.WriteLine($"{pizza.Name}: {size}, {price} ZL");
 
-            pizza.Toppings
-                .ForEach(t => Console.WriteLine($"\t{t.Name}: {t.Price} ZL"));
+            //pizza.Toppings
+            //    .ForEach(t => Console.WriteLine($"\t{t.Name}: {t.Price} ZL"));
         }
     }
 }

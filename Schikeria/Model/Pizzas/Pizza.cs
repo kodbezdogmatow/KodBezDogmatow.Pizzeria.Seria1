@@ -6,99 +6,94 @@ namespace Schikeria.Model.Pizzas
 {
     public class Pizza
     {
-        // TODO: Overhead - uproscic
-        public Dictionary<Sizes, decimal> Sizes { get; set; } = [];
-
         public required string Name { get; set; }
         public List<Topping> Toppings { get; set; } = [];
 
         public Sizes CurrentSize { get; set; }
         public List<Discount> CurrentDiscounts { get; set; } = [];
 
-        // NOTE: ! Klasa pizza nie jest tylko modelem Pizzy
-        public int Count { get; set; } = 1;
-
         public decimal Price
         {
             get
             {
-                var pizzaPrice = Sizes[CurrentSize];
-                var toppingsPrice = Toppings.Sum(t => t.Price);
-                var totalPrice = pizzaPrice + toppingsPrice;
+                throw new NotImplementedException("Czeka na refaktoryzacje");
+                //var pizzaPrice = Sizes[CurrentSize];
+                //var toppingsPrice = Toppings.Sum(t => t.Price);
+                //var totalPrice = pizzaPrice + toppingsPrice;
 
-                // TODO: Bez krotek -> uzyc klassy -> nazwac to co jest zwracane
-                (decimal?, decimal?) currencyDiscountResult = (null, null);
+                //// TODO: Bez krotek -> uzyc klassy -> nazwac to co jest zwracane
+                //(decimal?, decimal?) currencyDiscountResult = (null, null);
 
-                // NOTE: Hierarchia rabatow
-                if (CurrentDiscounts.Count > 0)
-                {
-                    var sumDiscountValue = 0m;
+                //// NOTE: Hierarchia rabatow
+                //if (CurrentDiscounts.Count > 0)
+                //{
+                //    var sumDiscountValue = 0m;
 
-                    // Sprawdzanie kombinacji
-                    var maxGroupDiscount = CurrentDiscounts
-                        .OfType<GroupDiscount>()
-                        .OrderByDescending(d => d.Value)
-                        .FirstOrDefault();
+                //    // Sprawdzanie kombinacji
+                //    var maxGroupDiscount = CurrentDiscounts
+                //        .OfType<GroupDiscount>()
+                //        .OrderByDescending(d => d.Value)
+                //        .FirstOrDefault();
 
-                    if (maxGroupDiscount != null)
-                    {
-                        // TODO: Kombinacja rabatow grupowych - wydzielic
-                        var vipDiscount = CurrentDiscounts
-                            .FirstOrDefault(m => m.Name == Names.VIP);
+                //    if (maxGroupDiscount != null)
+                //    {
+                //        // TODO: Kombinacja rabatow grupowych - wydzielic
+                //        var vipDiscount = CurrentDiscounts
+                //            .FirstOrDefault(m => m.Name == Names.VIP);
 
-                        if (vipDiscount != null)
-                        {
-                            sumDiscountValue = maxGroupDiscount.Value + vipDiscount.Value;
+                //        if (vipDiscount != null)
+                //        {
+                //            sumDiscountValue = maxGroupDiscount.Value + vipDiscount.Value;
 
-                            if (sumDiscountValue > 0.3m)
-                            {
-                                sumDiscountValue = 0.3m;
-                            }
-                        }
-                        else
-                        {
-                            sumDiscountValue = GetMaxDiscountValue(totalPrice);
-                        }
-                    }
-                    else
-                    {
-                        sumDiscountValue = GetDiscountPercentValue(totalPrice);
+                //            if (sumDiscountValue > 0.3m)
+                //            {
+                //                sumDiscountValue = 0.3m;
+                //            }
+                //        }
+                //        else
+                //        {
+                //            sumDiscountValue = GetMaxDiscountValue(totalPrice);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        sumDiscountValue = GetDiscountPercentValue(totalPrice);
                      
-                        currencyDiscountResult = GetDiscountCurrencyValue(
-                            Names.VIP, Names.Loyality);
+                //        currencyDiscountResult = GetDiscountCurrencyValue(
+                //            Names.VIP, Names.Loyality);
 
-                        // TODO: Czy na pewno rabat procentowy moze byc nadpisany przez rabat kwotowy?!
-                        // TODO: !Krotki
-                        if (currencyDiscountResult.Item1 == null)
-                        {
-                            currencyDiscountResult = GetDiscountCurrencyValue(
-                                Names.Student, Names.Saison);
-                        }
+                //        // TODO: Czy na pewno rabat procentowy moze byc nadpisany przez rabat kwotowy?!
+                //        // TODO: !Krotki
+                //        if (currencyDiscountResult.Item1 == null)
+                //        {
+                //            currencyDiscountResult = GetDiscountCurrencyValue(
+                //                Names.Student, Names.Saison);
+                //        }
 
-                        if (currencyDiscountResult.Item1 != null)
-                        {
-                            sumDiscountValue = currencyDiscountResult.Item1.Value;
+                //        if (currencyDiscountResult.Item1 != null)
+                //        {
+                //            sumDiscountValue = currencyDiscountResult.Item1.Value;
 
-                            if (sumDiscountValue > 0.3m)
-                            {
-                                sumDiscountValue = 0.3m;
-                            }
-                        }
-                    }
+                //            if (sumDiscountValue > 0.3m)
+                //            {
+                //                sumDiscountValue = 0.3m;
+                //            }
+                //        }
+                //    }
  
-                    var percentagePriceValue = 1 - sumDiscountValue;
+                //    var percentagePriceValue = 1 - sumDiscountValue;
 
-                    // Najpierw naliczamy rabaty procentowe, a pozniej rabaty cenowe
-                    totalPrice *= percentagePriceValue;
+                //    // Najpierw naliczamy rabaty procentowe, a pozniej rabaty cenowe
+                //    totalPrice *= percentagePriceValue;
 
-                    if (currencyDiscountResult.Item1 != null)
-                    {
-                        // NOTE: Naliczanie kwotowe
-                        totalPrice -= currencyDiscountResult.Item2!.Value;
-                    }
-                }
+                //    if (currencyDiscountResult.Item1 != null)
+                //    {
+                //        // NOTE: Naliczanie kwotowe
+                //        totalPrice -= currencyDiscountResult.Item2!.Value;
+                //    }
+                //}
 
-                return totalPrice;
+                //return totalPrice;
             }
         }
 
@@ -182,48 +177,49 @@ namespace Schikeria.Model.Pizzas
         // NOTE: Sprawdza rabaty i zwraca max wartosci rabatu
         private decimal GetMaxDiscountValue(decimal totalPrice)
         {
-            var discountValue = 0m;
+            throw new NotImplementedException("Bedzie zrefaktoryzowane");
+            //var discountValue = 0m;
 
-            var groupDiscounts = CurrentDiscounts
-                .OfType<GroupDiscount>()
-                .ToList();
+            //var groupDiscounts = CurrentDiscounts
+            //    .OfType<GroupDiscount>()
+            //    .ToList();
 
-            var maxGroupDiscount = groupDiscounts
-                .Where(gd => Count >= gd.MinCount)
-                .OrderByDescending(d => d.Value)
-                .FirstOrDefault();
+            //var maxGroupDiscount = groupDiscounts
+            //    .Where(gd => Count >= gd.MinCount)
+            //    .OrderByDescending(d => d.Value)
+            //    .FirstOrDefault();
 
-            if (maxGroupDiscount != null)
-            {
-                return maxGroupDiscount.Value;
-            }
+            //if (maxGroupDiscount != null)
+            //{
+            //    return maxGroupDiscount.Value;
+            //}
 
-            var sortedDiscounts = CurrentDiscounts
-                .Except(groupDiscounts)
-                .OrderByDescending(d => d.Value)
-                .ToList();
+            //var sortedDiscounts = CurrentDiscounts
+            //    .Except(groupDiscounts)
+            //    .OrderByDescending(d => d.Value)
+            //    .ToList();
 
-            foreach (var discount in sortedDiscounts)
-            {
-                if (discount != null)
-                {
-                    if (discount is PriceDiscount priceDiscount)
-                    {
-                        if (totalPrice >= priceDiscount.MinPrice)
-                        {
-                            discountValue = priceDiscount.Value;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        discountValue = discount.Value;
-                        break;
-                    }
-                }
-            }
+            //foreach (var discount in sortedDiscounts)
+            //{
+            //    if (discount != null)
+            //    {
+            //        if (discount is PriceDiscount priceDiscount)
+            //        {
+            //            if (totalPrice >= priceDiscount.MinPrice)
+            //            {
+            //                discountValue = priceDiscount.Value;
+            //                break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            discountValue = discount.Value;
+            //            break;
+            //        }
+            //    }
+            //}
 
-            return discountValue;
+            //return discountValue;
         }
     }
 }
