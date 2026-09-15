@@ -15,7 +15,7 @@ namespace Schikeria.Services.Pizzas
             var rule = _rules
                 .FirstOrDefault(r =>
                     r.PizzaName == pizza.Name &&
-                    r.Sizes == size);
+                    r.Size == size);
 
             if (rule != null)
             {

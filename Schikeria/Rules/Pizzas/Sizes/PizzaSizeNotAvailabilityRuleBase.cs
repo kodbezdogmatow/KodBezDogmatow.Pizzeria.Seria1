@@ -5,8 +5,8 @@ namespace Schikeria.Rules.Pizzas.Sizes
     public abstract class PizzaSizeNotAvailabilityRuleBase
     {
         // TODO: Refactoring
-        public string PizzaName { get; set; }
-        public Model.Pizzas.Sizes Sizes { get; set; }
+        public abstract string PizzaName { get; }
+        public abstract Model.Pizzas.Sizes Size { get; }
 
         public bool IsSatisfied(Pizza pizza)
         {
