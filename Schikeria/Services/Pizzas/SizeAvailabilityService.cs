@@ -1,11 +1,14 @@
 ﻿using Schikeria.Model.Pizzas;
 using Schikeria.Rules.Pizzas.Sizes;
+using Schikeria.Rules.Pizzas.Weganska;
 
 namespace Schikeria.Services.Pizzas
 {
     public class SizeAvailabilityService
     {
-        private readonly List<PizzaSizeNotAvailabilityRuleBase> _rules = [];
+        private readonly List<PizzaSizeNotAvailabilityRuleBase> _rules = [
+                new XXLNotAvailabilityRuleBase()
+            ];
 
         public bool Validate(Pizza pizza, Sizes size)
         {
