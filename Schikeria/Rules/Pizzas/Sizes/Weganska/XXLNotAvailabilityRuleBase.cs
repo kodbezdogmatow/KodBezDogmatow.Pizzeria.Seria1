@@ -1,8 +1,7 @@
 ﻿using Schikeria.Constants.Pizzas;
 using Schikeria.Model.Pizzas;
-using Schikeria.Rules.Pizzas.Sizes;
 
-namespace Schikeria.Rules.Pizzas.Weganska
+namespace Schikeria.Rules.Pizzas.Sizes.Weganska
 {
     public class XXLNotAvailabilityRuleBase :
         PizzaSizeNotAvailabilityRuleBase

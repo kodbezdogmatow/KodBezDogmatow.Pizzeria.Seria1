@@ -13,12 +13,12 @@ namespace Schikeria.Test.Services.Pizzas
             var pizza = new Pizza
             {
                 Name = Names.Weganska,
-                CurrentSize = Sizes.XL
+                CurrentSize = Sizes.XXL
             };
 
             // Act
             var service = new SizeAvailabilityService();
-            var result = service.Validate(pizza, Sizes.XXL);
+            var result = service.Validate(pizza);
 
             // Assert
             Assert.False(result);
