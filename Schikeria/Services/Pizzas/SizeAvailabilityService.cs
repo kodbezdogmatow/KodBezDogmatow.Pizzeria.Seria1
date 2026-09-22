@@ -5,7 +5,7 @@ namespace Schikeria.Services.Pizzas
 {
     public class SizeAvailabilityService
     {
-        private readonly NotAvailabilityRuleProvider _provider = new NotAvailabilityRuleProvider();
+        private readonly NotAvailabilityRuleProvider _provider = new ();
 
         public bool Validate(Pizza pizza)
         {
@@ -14,16 +14,17 @@ namespace Schikeria.Services.Pizzas
 
             // TODO: FirstOrDefault jest nieszczesliwe w tym przypadku. Walidacja czy sa duplkiaty
             // TODO: Uzycj providera
-            //var rule = _rules
-            //    .FirstOrDefault(r =>
-            //        r.PizzaName == pizza.Name &&
-            //        r.Size == pizza.CurrentSize);
+            var rule = _provider
+                .Get()
+                .FirstOrDefault(r =>
+                    r.PizzaName == pizza.Name &&
+                    r.Size == pizza.CurrentSize);
 
-            //if (rule != null)
-            //{
-            //    // ! Regula biznesowa sprawzda czy pizza jest NIEdostepna, dlatego negacja podczas przypisywania
-            //    result = !rule.IsSatisfied(pizza);
-            //}
+            if (rule != null)
+            {
+                // ! Regula biznesowa sprawzda czy pizza jest NIEdostepna, dlatego negacja podczas przypisywania
+                result = !rule.IsSatisfied(pizza);
+            }
 
             return result;
         }

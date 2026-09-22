@@ -1,8 +1,10 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Interfaces.Rules.Pizzas.Sizes;
+using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Rules.Pizzas.Sizes
 {
-    public abstract class PizzaSizeNotAvailabilityRuleBase
+    public abstract class NotAvailabilityRuleBase :
+        INotAvailabilityRuleBase
     {
         // TODO: Refactoring
         public abstract string PizzaName { get; }

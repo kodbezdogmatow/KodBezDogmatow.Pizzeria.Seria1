@@ -1,15 +1,14 @@
-﻿using Schikeria.Rules.Pizzas.Sizes;
-using Schikeria.Rules.Pizzas.Sizes.Weganska;
+﻿using Schikeria.Interfaces.Rules.Pizzas.Sizes;
+using Schikeria.Providers.Bases;
 
 namespace Schikeria.Providers.Rules.Pizzas.Sizes
 {
-    public class NotAvailabilityRuleProvider
+    public class NotAvailabilityRuleProvider :
+        ImplementationProvider
     {
-        public List<PizzaSizeNotAvailabilityRuleBase> Get()
+        public List<INotAvailabilityRuleBase> Get()
         {
-            return [
-                new XXLNotAvailabilityRuleBase()
-            ];
+            return GetImplementations<INotAvailabilityRuleBase>();
         }
     }
 }

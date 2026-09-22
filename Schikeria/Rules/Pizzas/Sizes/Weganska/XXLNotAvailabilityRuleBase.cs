@@ -4,7 +4,7 @@ using Schikeria.Model.Pizzas;
 namespace Schikeria.Rules.Pizzas.Sizes.Weganska
 {
     public class XXLNotAvailabilityRuleBase :
-        PizzaSizeNotAvailabilityRuleBase
+        NotAvailabilityRuleBase
     {
         public override string PizzaName => Names.Weganska;
 
