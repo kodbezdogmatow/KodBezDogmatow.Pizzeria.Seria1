@@ -2,32 +2,10 @@
 using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
-
-//1. Pojawia się promocja zależna od liczby pizz:
-
-//2 pizze → 5%,
-//3 pizze → 10%,
-//5 lub więcej → 15%.
-
-//Rabat grupowy jest liczony zamiast zwykłego rabatu.
-
-//Na razie rabaty się nie łączą — obowiązuje jeden, najwyższy rabat.
-
-// 2. Niektóre rabaty można łączyć.
-
-//Przykładowo:
-
-//student + poniedziałek → można połączyć,
-//VIP +poniedziałek → można połączyć,
-//rabat grupowy + inny niz vip → zawsze grupowy,
-//rabat grupowy + VIP → można.
-
-//jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, to tylko rabat grupowy
-//jesli wiele rabatow i kazda z powyzszych regul nie zachodzi, zaden grupowy, to najwyzszy rabat
-
-//Dochodzi też zasada:
-
-// TODO: maksymalny łączny rabat to 30%.
+// TODO: Wymagania
+// * Hawajska XXL
+// * Diavola S
+// * Salami XXL
 
 // Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
