@@ -13,7 +13,6 @@ namespace Schikeria.Services.Pizzas
             var result = true;
 
             // TODO: FirstOrDefault jest nieszczesliwe w tym przypadku. Walidacja czy sa duplkiaty
-            // TODO: Uzycj providera
             var rule = _provider
                 .Get()
                 .FirstOrDefault(r =>
