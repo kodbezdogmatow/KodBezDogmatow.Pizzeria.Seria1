@@ -1,18 +1,20 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Guards;
+using Schikeria.Interfaces.Providers.Rules.Pizzas.Sizes;
+using Schikeria.Model.Pizzas;
 using Schikeria.Providers.Rules.Pizzas.Sizes;
 
 namespace Schikeria.Services.Pizzas
 {
     public class SizeAvailabilityService
     {
-        private readonly NotAvailabilityRuleProvider _provider = new ();
+        private readonly INotAvailabilityRuleProvider _provider = new NotAvailabilityRuleProvider();
 
         public bool Validate(Pizza pizza)
         {
-            // TODO: Sprawdz czy current size jest stawiony?
+            ValidEnumGuard.Against(pizza.CurrentSize);
+
             var result = true;
 
-            // TODO: FirstOrDefault jest nieszczesliwe w tym przypadku. Walidacja czy sa duplkiaty
             var rule = _provider
                 .Get()
                 .FirstOrDefault(r =>

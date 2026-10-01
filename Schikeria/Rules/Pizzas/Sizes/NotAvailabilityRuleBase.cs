@@ -8,7 +8,7 @@ namespace Schikeria.Rules.Pizzas.Sizes
     {
         // TODO: Refactoring
         public abstract string PizzaName { get; }
-        public abstract Model.Pizzas.Sizes Size { get; }
+        public abstract Model.Pizzas.Sizes Size { get; }        
 
         public bool IsSatisfied(Pizza pizza)
         {
@@ -17,5 +17,10 @@ namespace Schikeria.Rules.Pizzas.Sizes
 
         protected abstract bool SpecifyIsSatisfied(
             Pizza pizza);
+
+        public string GetUniqueKey()
+        {
+            return $"{PizzaName}_{Size}";
+        }
     }
 }

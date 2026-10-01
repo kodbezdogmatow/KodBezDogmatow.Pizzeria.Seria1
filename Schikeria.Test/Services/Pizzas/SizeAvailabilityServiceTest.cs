@@ -78,5 +78,26 @@ namespace Schikeria.Test.Services.Pizzas
             // Assert
             Assert.False(result);
         }
+
+
+        [Fact]
+        public void CurrentSize_Is_None()
+        {
+            // Arrange
+            var pizza = new Pizza
+            {
+                Name = Names.Weganska,
+                CurrentSize = Sizes.None
+            };
+
+            // Act
+            var service = new SizeAvailabilityService();
+
+            // Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var result = service.Validate(pizza);
+            });
+        }
     }
 }

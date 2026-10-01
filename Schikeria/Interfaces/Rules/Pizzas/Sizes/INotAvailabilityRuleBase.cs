@@ -1,8 +1,10 @@
-﻿using Schikeria.Model.Pizzas;
+﻿using Schikeria.Interfaces.Common;
+using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Interfaces.Rules.Pizzas.Sizes
 {
-    public interface INotAvailabilityRuleBase
+    public interface INotAvailabilityRuleBase :
+        IUniqueKey
     {
         string PizzaName { get; }
         Model.Pizzas.Sizes Size { get; }
