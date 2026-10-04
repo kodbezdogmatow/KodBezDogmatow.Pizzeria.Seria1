@@ -1,5 +1,4 @@
 ﻿using Schikeria.Interfaces.Common;
-using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Interfaces.Rules.Pizzas.Sizes
 {
@@ -9,6 +8,6 @@ namespace Schikeria.Interfaces.Rules.Pizzas.Sizes
         string PizzaName { get; }
         Model.Pizzas.Sizes Size { get; }
 
-        bool IsSatisfied(Pizza pizza);
+        bool IsSatisfied(string pizzaName, Model.Pizzas.Sizes size);
     }
 }

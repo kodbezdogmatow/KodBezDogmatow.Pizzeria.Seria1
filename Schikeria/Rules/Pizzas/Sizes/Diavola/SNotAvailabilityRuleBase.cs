@@ -1,5 +1,4 @@
 ﻿using Schikeria.Constants.Pizzas;
-using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Rules.Pizzas.Sizes.Diavola
 {
@@ -10,9 +9,10 @@ namespace Schikeria.Rules.Pizzas.Sizes.Diavola
 
         public override Model.Pizzas.Sizes Size => Model.Pizzas.Sizes.Small;
 
-        protected override bool SpecifyIsSatisfied(Pizza pizza)
+        protected override bool SpecifyIsSatisfied(
+            string pizzaName, Model.Pizzas.Sizes size)
         {
-            return pizza.Name == PizzaName && pizza.CurrentSize == Size;
+            return pizzaName == PizzaName && size == Size;
         }
     }
 }

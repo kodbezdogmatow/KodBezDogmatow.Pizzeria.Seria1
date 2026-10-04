@@ -10,15 +10,11 @@ namespace Schikeria.Test.Services.Pizzas
         public void Weganska_XXL_NotAvailable()
         {
             // Arrange
-            var pizza = new Pizza
-            {
-                Name = Names.Weganska,
-                CurrentSize = Sizes.XXL
-            };
 
             // Act
             var service = new SizeAvailabilityService();
-            var result = service.Validate(pizza);
+            var result = service.Validate(
+                Names.Weganska, Sizes.XXL);
 
             // Assert
             Assert.False(result);
@@ -28,16 +24,12 @@ namespace Schikeria.Test.Services.Pizzas
         public void Hawajska_XXL_NotAvailable()
         {
             // Arrange
-            var pizza = new Pizza
-            {
-                Name = Names.Hawajska,
-                CurrentSize = Sizes.XXL
-            };
 
             // Act
             var service = new SizeAvailabilityService();
 
-            var result = service.Validate(pizza);
+            var result = service.Validate(
+                Names.Hawajska, Sizes.XXL);
 
             // Assert
             Assert.False(result);
@@ -47,15 +39,11 @@ namespace Schikeria.Test.Services.Pizzas
         public void Diavola_S_NotAvailable()
         {
             // Arrange
-            var pizza = new Pizza
-            {
-                Name = Names.Diavola,
-                CurrentSize = Sizes.Small
-            };
-
+   
             // Act
             var service = new SizeAvailabilityService();
-            var result = service.Validate(pizza);
+            var result = service.Validate(
+                Names.Diavola, Sizes.Small);
 
             // Assert
             Assert.False(result);
@@ -65,15 +53,11 @@ namespace Schikeria.Test.Services.Pizzas
         public void Salami_XXL_NotAvailable()
         {
             // Arrange
-            var pizza = new Pizza
-            {
-                Name = Names.Salami,
-                CurrentSize = Sizes.XXL
-            };
-
+  
             // Act
             var service = new SizeAvailabilityService();
-            var result = service.Validate(pizza);
+            var result = service.Validate(
+                Names.Salami, Sizes.XXL);
 
             // Assert
             Assert.False(result);
@@ -96,7 +80,8 @@ namespace Schikeria.Test.Services.Pizzas
             // Assert
             Assert.Throws<ArgumentException>(() =>
             {
-                var result = service.Validate(pizza);
+                var result = service.Validate(
+                    Names.Weganska, Sizes.None);
             });
         }
     }

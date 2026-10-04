@@ -1,5 +1,4 @@
 ﻿using Schikeria.Interfaces.Rules.Pizzas.Sizes;
-using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Rules.Pizzas.Sizes
 {
@@ -8,15 +7,16 @@ namespace Schikeria.Rules.Pizzas.Sizes
     {
         // TODO: Refactoring
         public abstract string PizzaName { get; }
-        public abstract Model.Pizzas.Sizes Size { get; }        
+        public abstract Model.Pizzas.Sizes Size { get; }
 
-        public bool IsSatisfied(Pizza pizza)
+        // TODO: Context dla reguly?
+        public bool IsSatisfied(string pizzaName, Model.Pizzas.Sizes size)
         {
-            return SpecifyIsSatisfied(pizza);
+            return SpecifyIsSatisfied(pizzaName, size);
         }
 
         protected abstract bool SpecifyIsSatisfied(
-            Pizza pizza);
+            string pizzaName, Model.Pizzas.Sizes size);
 
         public string GetUniqueKey()
         {

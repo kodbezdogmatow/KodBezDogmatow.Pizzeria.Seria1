@@ -2,11 +2,6 @@
 using Schikeria.Model.Pizzas;
 using Schikeria.Services.Pizzas;
 
-// TODO: Wymagania
-// * Hawajska XXL
-// * Diavola S
-// * Salami XXL
-
 // Pizza, Rozmiar, Dodatk(ow)
 var displayService = new DisplayService();
 var pizzas = new Schikeria.Providers.Pizzas.Provider().Get();

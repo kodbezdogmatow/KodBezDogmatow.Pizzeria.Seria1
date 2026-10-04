@@ -1,7 +1,6 @@
 ﻿using Schikeria.Constants.Pizzas;
 using Schikeria.Guards;
 using Schikeria.Interfaces.Rules.Pizzas.Salami;
-using Schikeria.Model.Pizzas;
 
 namespace Schikeria.Rules.Pizzas.Sizes.Salami
 {
@@ -14,11 +13,12 @@ namespace Schikeria.Rules.Pizzas.Sizes.Salami
 
         public override Model.Pizzas.Sizes Size => Model.Pizzas.Sizes.XXL;
 
-        protected override bool SpecifyIsSatisfied(Pizza pizza)
+        protected override bool SpecifyIsSatisfied(
+            string pizzaName, Model.Pizzas.Sizes size)
         {
-            var unavailableAfterHouerRule = NotNullGuard.Ensure(_unavailableAfterHouerRule);
-            return pizza.Name == PizzaName && 
-                pizza.CurrentSize == Size &&
+            var unavailableAfterHouerRule = NotNullGuard.Against(_unavailableAfterHouerRule);
+            return pizzaName == PizzaName &&
+                size == Size &&
                 unavailableAfterHouerRule.IsSatisfied();
         }
     }
