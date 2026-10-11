@@ -1,6 +1,6 @@
 ﻿namespace Schikeria.Model.Discounts
 {
-    public class PriceDiscount : 
+    public class PriceDiscount :
         Discount
     {
         public required decimal MinPrice { get; set; }

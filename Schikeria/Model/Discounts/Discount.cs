@@ -4,9 +4,8 @@
     {
         public required string Name { get; set; }
         public required decimal Value { get; set; }
-
-        // 1. ValueType: % albo zl
-        // 2. Nowa klasa (pusta)
+        public DiscountKind Kind { get; set; }
+        public CalculationType CalculationType { get; set; }
     }
 
     //  1. rabaty kwoty:

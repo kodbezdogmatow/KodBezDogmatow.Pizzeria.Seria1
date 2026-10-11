@@ -5,7 +5,7 @@ namespace Schikeria.Model.Orders
     public class OrderItem
     {
         public required Pizza Pizza { get; set; }
-
+        public decimal TotalPrice { get; set; }
         // TODO: Nie moze byc mniejsza niz 1
         public int Count { get; set; }
     }
