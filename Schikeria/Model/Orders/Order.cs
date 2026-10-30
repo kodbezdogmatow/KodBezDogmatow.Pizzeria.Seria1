@@ -1,4 +1,6 @@
-﻿namespace Schikeria.Model.Orders
+﻿using Schikeria.Model.Discounts.Calculations;
+
+namespace Schikeria.Model.Orders
 {
     public class Order
     {
@@ -9,5 +11,6 @@
         // TODO: Ta logike wyciagnac na zewnatrz na cene maja wplyw rabat, a pozniej
         // napewno inne jeszcze czynniki
         public decimal TotalPrice => Items.Sum(i => i.TotalPrice);
+        public CalculationPlan CalculationPlan { get; set; } = new();
     }
 }

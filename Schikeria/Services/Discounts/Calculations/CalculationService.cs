@@ -7,6 +7,7 @@ using Schikeria.Model.Orders;
 
 namespace Schikeria.Services.Discounts.Calculations
 {
+    // TODO: DBO - czy bedzie jeszcze potrzebny?
     public class CalculationService :
         ICalculationService
     {
